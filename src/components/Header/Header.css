@@ -1,0 +1,16 @@
+.Image{
+    height: 70px;
+    float: left;
+    vertical-align: bottom;
+}
+.text{
+    height: 70px;
+    font-size: 48px;
+    color: #929393;
+    float: left;
+    vertical-align: center;
+}
+
+.bg-light{
+    background-color: #edeeef !important;
+}

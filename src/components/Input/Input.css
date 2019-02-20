@@ -23,4 +23,22 @@
 .submitButton{
     background-color: #1b6ab5;
     color: white;
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font: inherit;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+
+.error{
+    color: red;
+    float: left;
+    font-size: 10px;
+    padding-left: 10px;
+}
+
+.space{
+    margin-bottom: 30px;
 }

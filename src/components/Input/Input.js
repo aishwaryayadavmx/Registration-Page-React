@@ -4,22 +4,35 @@ import '../Input/Input.css';
 const input = (props) => {
     
     let inputElement = null;
+    let icon = null;
 
+    if(props.errorMessage!=""){
+        icon = <i class="fas fa-exclamation-circle"></i>;
+    }   
+    else
+        icon = null;
+        
     switch(props.inputType){
         case('input'):
-            inputElement = <input className="InputElement" {...props} onChange={props.changed}/>;
+            inputElement = <div className="space">
+                                <input className="InputElement" {...props} />
+                                <p className="error">
+                                    {icon}
+                                    {props.errorMessage}
+                                </p>
+                            </div>;
             break;
         case('textarea'):
-            inputElement = <textarea className="InputElement" {...props} onChange={props.changed}/>;
+            inputElement = <div className="space"><textarea className="InputElement" {...props}/></div>;
             break;
         case('radio'):
             inputElement = <input  {...props} />;
             break;
         case('submit'):
-            inputElement = <button  className="InputElement submitButton" {...props}>{props.name}</button>;
+            inputElement = <button  className=" submitButton" {...props}>{props.name}</button>;
             break;
         default:
-            inputElement = <input className="InputElement" {...props} onChange={props.changed}/>;
+            inputElement = <input className="InputElement" {...props}/>;
     }
     
     return(

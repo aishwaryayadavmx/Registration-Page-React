@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+  margin-top: 13%;
+  width: 80%;
+}
+
+.jumbotron{
+  background-color: white;
+}
+
+.row{
+  margin-top: 5px;
+}

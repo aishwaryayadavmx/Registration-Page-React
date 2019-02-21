@@ -1,0 +1,45 @@
+.Input{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.InputElement{
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color:#f2f3f4;
+    font: inherit;
+    padding: 10px 10px;
+}
+
+.InputElement:focus{
+    outline: none;
+    background-color: white;
+    border: 2px solid #1b6ab5;
+}
+
+.submitButton{
+    background-color: #1b6ab5;
+    color: white;
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font: inherit;
+    padding: 10px 10px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.error{
+    color: red;
+    float: left;
+    font-size: 10px;
+    padding-left: 10px;
+}
+
+.spaceForError{
+    margin-bottom: 30px;
+}

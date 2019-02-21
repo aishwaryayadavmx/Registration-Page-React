@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+  margin-top: 7%;
+  width: 75%;
+  position: relative;
+}
+
+.gender{
+  text-align: left;
+  margin-left: 10px;
+  padding-top: 10px;
+}
+.jumbotron{
+  background-color: white;
+}
+
+.row{
+  margin-top: 5px;
+}
+
+h3{
+  float: left;
+}
+
+.spaceForError{
+  margin-bottom: 30px;
+}
+
+.date {
+  width: 100%;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color:#f2f3f4;
+  font: inherit;
+  padding: 10px 10px;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container{
+  width: 100%;
+}

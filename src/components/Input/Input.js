@@ -5,21 +5,21 @@ const input = (props) => {
     
     let inputElement = null;
     let icon = null;
+    let radioButtonField = null;
 
-    if(props.errorMessage!==""){
+    if(props.errorMessage!=="")
         icon = <i className="fas fa-exclamation-circle"></i>;
-    }   
     else
         icon = null;
 
     switch(props.inputType){
         case('input'):
-            inputElement = <div className="space">
+            inputElement = <div className="spaceForError">
                                 <input className="InputElement" 
                                     placeholder={props.placeholder} 
                                     type={props.type} 
                                     required={props.required}
-                                    onChange={props.onChange} 
+                                    onBlur={props.onChange} 
                                 />
                                 <p className="error">
                                     {icon}
@@ -28,7 +28,7 @@ const input = (props) => {
                             </div>;
             break;
         case('textarea'):
-            inputElement = <div className="space">
+            inputElement = <div className="spaceForError">
                                 <textarea className="InputElement" 
                                     placeholder={props.placeholder} 
                                     required={props.required}
@@ -37,14 +37,16 @@ const input = (props) => {
                             </div>;
             break;
         case('radio'):
-            inputElement = <div>
+            if(props.gender === "Male")
+                radioButtonField="customRadio1";
+            else
+                radioButtonField="customRadio2";
+            inputElement = <div className={props.className}>
                                 <div className="custom-control custom-radio custom-control-inline">
-                                    <input type={props.type} className="custom-control-input" id="customRadio1" name="gender" value="Male"/>
-                                    <label class="custom-control-label" for="customRadio1">Male</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type={props.type} class="custom-control-input" id="customRadio2" name="gender" value="Female" />
-                                    <label class="custom-control-label" for="customRadio2">Female</label>
+                                    <input type={props.type} required={props.required} checked={props.checked} 
+                                        onChange={props.onChange} className="custom-control-input" id={radioButtonField} 
+                                        name="gender" value={props.gender} />
+                                    <label className="custom-control-label" htmlFor={radioButtonField}>{props.gender}</label>
                                 </div>
                             </div>;                            
             break;

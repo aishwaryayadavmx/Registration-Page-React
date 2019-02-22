@@ -1,16 +1,37 @@
 .Image{
-    height: 70px;
+    height: 55px;
     float: left;
     vertical-align: bottom;
 }
 .text{
-    height: 70px;
-    font-size: 48px;
+    height: 55px;
+    font-size: 33px;
     color: #929393;
     float: left;
     vertical-align: center;
 }
 
 .bg-light{
-    background-color: #edeeef !important;
+    background-color: #edeeef !important ;
+    display: flex;
+    flex-wrap: wrap !important;
 }
+
+.navbar-text{
+    padding-top: 0rem !important;
+}
+
+.navbar .container-fluid{
+    display: flex;
+    flex-wrap: wrap !important;
+}
+
+.navbar>.container, .navbar>.container-fluid{
+    display: flex;
+    flex-wrap: wrap !important;
+}
+.navbar{
+
+
+display: flex;
+    flex-wrap: wrap !important;}

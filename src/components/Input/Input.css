@@ -30,6 +30,7 @@
     font: inherit;
     padding: 10px 10px;
     cursor: pointer;
+    margin-bottom: 30px;
 }
 
 .error{
@@ -39,6 +40,6 @@
     padding-left: 10px;
 }
 
-.space{
+.spaceForError{
     margin-bottom: 30px;
 }

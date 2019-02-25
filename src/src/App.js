@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
-import Axios from 'axios';
 import { connect } from 'react-redux';
 import PhoneInput from 'react-phone-number-input';
 
@@ -12,36 +11,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import 'react-phone-number-input/style.css';
 
 class App extends Component {
-  
-  
-  FormSubmitHandler = (event) => {
-
-    if(this.props.firstNameError || this.props.lastNameError || this.props.phoneNumberError || this.props.emailError)
-    {
-      event.preventDefault();
-      console.log("enter data");
-    }
-    else{
-      const data={
-        firstName:  this.props.firstName,
-        lastName: this.props.lastName,
-        gender: this.props.gender,
-        dateOfBirth:  this.props.dateOfBirth,
-        phoneNumber:  this.props.phoneNumber,
-        email:  this.props.email,
-        shortBio: this.props.shortBio
-      }
-
-      Axios.post('http://localhost:3306/insert',data).then(response=>{
-        alert(response.data.status);
-      });
-      
-      this.props.dateOfBirth = null;
-      this.props.phoneNumber = null;
-      event.target.reset();
-    }
-    
-  }
       
   render() {  
 
@@ -55,7 +24,7 @@ class App extends Component {
                 <h3 >Create an account</h3>
               </div>
             </div>
-            <form onSubmit={(event) => {this.FormSubmitHandler(event)}}>
+            <form onSubmit={this.props.FormSubmitHandler}>
               <div className="row">
                 <div className="col-lg-6">
                   <Input 
@@ -185,7 +154,8 @@ const mapDispatchToProps = dispatch => {
     DateChangedHandler: (event) => dispatch({type: 'dateChanged', event: event}),
     PhoneNumberChangedHandler: (event) => dispatch({type: 'pNumberChanged', event: event}),
     EmailChangedHandler: (event) => dispatch({type: 'emailChanged', event: event}),
-    ShortBioChangedHandler: (event) => dispatch({type: 'sBioChanged', event: event})
+    ShortBioChangedHandler: (event) => dispatch({type: 'sBioChanged', event: event}),
+    FormSubmitHandler: (event) => dispatch({type: 'formSubmit', event: event})
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

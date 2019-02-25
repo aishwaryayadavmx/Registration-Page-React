@@ -37,9 +37,7 @@ class App extends Component {
       });
       
       this.props.dateOfBirth = null;
-      this.setState({
-        phoneNumber: null
-      });
+      this.props.phoneNumber = null;
       event.target.reset();
     }
     

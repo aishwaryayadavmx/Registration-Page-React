@@ -37,7 +37,7 @@ const input = (props) => {
                             </div>;
             break;
         case('radio'):
-            if(props.gender == "Male")
+            if(props.gender === "Male")
                 radioButtonField="customRadio1";
             else
                 radioButtonField="customRadio2";
@@ -46,7 +46,7 @@ const input = (props) => {
                                     <input type={props.type} required={props.required} checked={props.checked} 
                                         onChange={props.onChange} className="custom-control-input" id={radioButtonField} 
                                         name="gender" value={props.gender} />
-                                    <label className="custom-control-label" for={radioButtonField}>{props.gender}</label>
+                                    <label className="custom-control-label" htmlFor={radioButtonField}>{props.gender}</label>
                                 </div>
                             </div>;                            
             break;

@@ -1,164 +1,50 @@
 import React, { Component } from 'react';
-import './App.css';
+import DatePicker from "react-datepicker";
+import Axios from 'axios';
+import { connect } from 'react-redux';
+import PhoneInput from 'react-phone-number-input';
+
 import Input from './components/Input/Input';
 import Header from './components/Header/Header';
 import logo from './assets/mscripts.png';
-import DatePicker from "react-datepicker";
+import './App.css';
 import "react-datepicker/dist/react-datepicker.css";
-import Axios from 'axios';
+import 'react-phone-number-input/style.css';
 
 class App extends Component {
   
-  constructor(props) {
-    super(props);
- 
-     this.handleDateChange = this.handleDateChange.bind(this);
-  }
- 
-  handleDateChange= (date) => {
-    this.setState({
-      dateOfBirth: date
-    });
-  }
-
-  state = {
-    firstName: "",
-    firstNameError: "",
-    lastName :"",
-    lastNameError: "",
-    gender: "",
-    dateOfBirth: null,
-    dateOfBirthError: "",
-    phoneNumber: null,
-    phoneNumberError: "",
-    email: "",
-    emailError: "",
-    shortBio: ""
-  }
   
-  FirstNameChangedHandler = (event) => {
-    let name = event.target.value;
-    let numbers = /\d/;
-    if(numbers.test(name)){
-      this.setState({
-        firstNameError: " Enter valid first name"
-      })
-    }
-    else{
-      this.setState({
-        firstName: event.target.value,
-        firstNameError: ""
-      });
-    }
-  }
-
-  LastNameChangedHandler = (event) => {
-    let name = event.target.value;
-    let numbers = /\d/;
-    if(numbers.test(name)){
-      this.setState({
-        lastNameError: " Enter valid last name"
-      })
-    }
-    else{
-      this.setState({
-        lastName: event.target.value,
-        lastNameError: ""
-      });
-    }
-  }
-
-  GenderChangedHandler = event => {
-    let gender = event.target.value;
-    let checked = event.target.checked;
-
-    if(checked){
-      if(gender==="Male")
-        this.setState({
-          gender: "M"
-        });
-      else
-        this.setState({
-          gender: "F"
-        });
-    }
-      
-  }
-
-  DateOfBirthChangeHandler = event => {
-    this.setState({
-      dateOfBirth: event.target.value
-    });
-  }
-  
-  PhoneNumberChangedHandler = (event) => {
-    let number = event.target.value;
-    let alphabets = /[A-Za-z]/;
-    if(alphabets.test(number)){
-      this.setState({
-        phoneNumberError: " Enter valid phone number"
-      });
-    }
-    else if(number > 9999999999){
-      this.setState({
-        phoneNumberError: " Enter valid phone number"
-      });
-    }
-    else{
-      this.setState({
-        phoneNumber: event.target.value,
-        phoneNumberError: ""
-      });
-    }
-  }
-
-  EmailChangedHandler = (event) => {
-    let email = event.target.value;
-    let characters = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
-    if(!characters.test(email) && email){
-      this.setState({
-        emailError: " Enter valid email address"
-      });
-    }
-    else{
-      this.setState({
-        email: event.target.value,
-        emailError: ""
-      });
-    }
-  }
-
-  ShortBioChangedHandler = (event) => {
-    this.setState({
-      shortBio: event.target.value
-    });
-  }
-
   FormSubmitHandler = (event) => {
-    
-    event.preventDefault();
 
-    const data={
-      firstName:  this.state.firstName,
-      lastName: this.state.lastName,
-      gender: this.state.gender,
-      dateOfBirth:  this.state.dateOfBirth,
-      phoneNumber:  this.state.phoneNumber,
-      email:  this.state.email,
-      shortBio: this.state.shortBio
+    if(this.props.firstNameError || this.props.lastNameError || this.props.phoneNumberError || this.props.emailError)
+    {
+      event.preventDefault();
+      console.log("enter data");
     }
+    else{
+      const data={
+        firstName:  this.props.firstName,
+        lastName: this.props.lastName,
+        gender: this.props.gender,
+        dateOfBirth:  this.props.dateOfBirth,
+        phoneNumber:  this.props.phoneNumber,
+        email:  this.props.email,
+        shortBio: this.props.shortBio
+      }
 
-    Axios.post('http://localhost:3306/insert',data).then(response=>{
-      alert(response.data.status);
-    });
-
-    this.setState({
-        dateOfBirth: null
+      Axios.post('http://localhost:3306/insert',data).then(response=>{
+        alert(response.data.status);
       });
-    event.target.reset();
+      
+      this.props.dateOfBirth = null;
+      this.setState({
+        phoneNumber: null
+      });
+      event.target.reset();
+    }
+    
   }
-
+      
   render() {  
 
     return (
@@ -179,17 +65,17 @@ class App extends Component {
                     placeholder="First name" 
                     type="text" 
                     required="required"
-                    errorMessage={this.state.firstNameError} 
-                    onChange={event => {this.FirstNameChangedHandler(event)}}/>
+                    errorMessage={this.props.firstNameError} 
+                    onChange={this.props.FirstNameChangedHandler}/>
                 </div>
                 <div className="col-lg-6">
                   <Input 
                     inputType="input" 
                     placeholder="Last name" 
                     type="text" 
-                    errorMessage={this.state.lastNameError}
+                    errorMessage={this.props.lastNameError}
                     required="required"
-                    onChange={event => {this.LastNameChangedHandler(event)}}/>
+                    onChange={this.props.LastNameChangedHandler}/>
                 </div>
               </div>
               <div className="row">
@@ -203,7 +89,7 @@ class App extends Component {
                       gender="Male"
                       required="required"
                       className="gender"
-                      onChange={event => {this.GenderChangedHandler(event)}}/>
+                      onChange={this.props.GenderChangedHandler}/>
                   </div>
                   <div className="col-sm-4 col-lg-2 spaceForError">
                     <Input 
@@ -212,32 +98,35 @@ class App extends Component {
                       gender="Female"
                       required="required"
                       className="gender"
-                      onChange={event => {this.GenderChangedHandler(event)}}/>
+                      onChange={this.props.GenderChangedHandler}/>
                   </div>
                 <div className="col-lg-6 spaceForError">
                     <DatePicker  
                       className="date" 
                       placeholderText="Date Of Birth"
-                      selected={this.state.dateOfBirth}
+                      selected={this.props.dateOfBirth}
                       showYearDropdown
                       scrollableYearDropdown
                       yearDropdownItemNumber={35}
                       showMonthDropdown
                       useShortMonthInDropdown
-                      
-                      onChange={this.handleDateChange}/>
-                      {this.state.dateOfBirthError}
+                      withPortal
+                      onChange={this.props.DateChangedHandler}/>
                 </div>
               </div>
               <div className="row">
                 <div className="col-lg-6">
-                  <Input 
-                    inputType="input" 
-                    placeholder="Phone number" 
-                    type="tel" 
-                    required="required"
-                    errorMessage={this.state.phoneNumberError}
-                    onChange={event => {this.PhoneNumberChangedHandler(event)}}/>
+                    <PhoneInput
+                     placeholder="Phone number"
+                     value={ this.props.phoneNumber }
+                     required="required"
+                     className="phone"
+                     onChange={this.props.PhoneNumberChangedHandler }
+                     />
+                    <p className="error">
+                        {this.props.icon}
+                        {this.props.phoneNumberError}
+                    </p>
                 </div>
                 <div className="col-lg-6">
                   <Input 
@@ -245,8 +134,8 @@ class App extends Component {
                     placeholder="E-mail" 
                     type="email" 
                     required="required"
-                    errorMessage={this.state.emailError}
-                    onChange={event => {this.EmailChangedHandler(event)}}/>
+                    errorMessage={this.props.emailError}
+                    onChange={this.props.EmailChangedHandler}/>
                 </div>
               </div>
               <div className="row">
@@ -255,8 +144,8 @@ class App extends Component {
                     inputType="textarea" 
                     placeholder="Short bio" 
                     required="required"
-                    onChange={event => {this.ShortBioChangedHandler(event)}}
-                    errorMessage={this.state.shortBioError}/>
+                    onChange={this.props.ShortBioChangedHandler}
+                    errorMessage={this.props.shortBioError}/>
                 </div>
               </div>
               <div className="row">
@@ -272,4 +161,33 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    firstName: state.firstName,
+    firstNameError: state.firstNameError,
+    lastName : state.lastName,
+    lastNameError: state.lastNameError,
+    gender: state.gender,
+    dateOfBirth: state.dateOfBirth,
+    dateOfBirthError: state.dateOfBirthError,
+    phoneNumber: state.phoneNumber,
+    phoneNumberError: state.phoneNumberError, 
+    email: state.email,
+    emailError: state.emailError,
+    shortBio: state.shortBio,
+    icon: state.icon
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    FirstNameChangedHandler: (event) => dispatch({type: 'fNameChanged', event: event}),
+    LastNameChangedHandler: (event) => dispatch({type: 'lNameChanged', event: event}),
+    GenderChangedHandler: (event) => dispatch({type: 'genderChanged', event: event}),
+    DateChangedHandler: (event) => dispatch({type: 'dateChanged', event: event}),
+    PhoneNumberChangedHandler: (event) => dispatch({type: 'pNumberChanged', event: event}),
+    EmailChangedHandler: (event) => dispatch({type: 'emailChanged', event: event}),
+    ShortBioChangedHandler: (event) => dispatch({type: 'sBioChanged', event: event})
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);

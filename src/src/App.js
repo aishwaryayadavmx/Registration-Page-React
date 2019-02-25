@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import logo from './assets/mscripts.png';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Axios from 'axios';
 
 class App extends Component {
   
@@ -15,47 +16,9 @@ class App extends Component {
   }
  
   handleDateChange= (date) => {
-    
-    let day="";
-    let month="";
-    let year="";
-    let dob=null;
-
-    day = date.toString().split(" ")[2];
-    month = date.toString().split(" ")[1];
-    year = date.toString().split(" ")[3];
-
-    if(month == "Jan")
-      month = "01";
-    else if(month == "Feb")
-      month = "02";
-    else if(month == "Mar")
-      month = "03";
-    else if(month == "Apr")
-      month = "04";
-    else if(month == "May")
-      month = "05";
-    else if(month == "Jun")
-      month = "06";
-    else if(month == "Jul")
-      month = "07";
-    else if(month == "Aug")
-      month = "08";
-    else if(month == "Sep")
-      month = "09";
-    else if(month == "Oct")
-      month = "10";
-    else if(month == "Nov")
-      month = "11";
-    else if(month == "Dec")
-      month = "12";
-
-    dob = new Date(year+"-"+month+"-"+day);
-    console.log(dob);
     this.setState({
       dateOfBirth: date
     });
- 
   }
 
   state = {
@@ -65,6 +28,7 @@ class App extends Component {
     lastNameError: "",
     gender: "",
     dateOfBirth: null,
+    dateOfBirthError: "",
     phoneNumber: null,
     phoneNumberError: "",
     email: "",
@@ -77,7 +41,7 @@ class App extends Component {
     let numbers = /\d/;
     if(numbers.test(name)){
       this.setState({
-        firstNameError: " First name cannot contain numbers"
+        firstNameError: " Enter valid first name"
       })
     }
     else{
@@ -93,7 +57,7 @@ class App extends Component {
     let numbers = /\d/;
     if(numbers.test(name)){
       this.setState({
-        lastNameError: " Last name cannot contain numbers"
+        lastNameError: " Enter valid last name"
       })
     }
     else{
@@ -108,10 +72,17 @@ class App extends Component {
     let gender = event.target.value;
     let checked = event.target.checked;
 
-    if(checked)
-      this.setState({
-        gender: gender
-      });
+    if(checked){
+      if(gender==="Male")
+        this.setState({
+          gender: "M"
+        });
+      else
+        this.setState({
+          gender: "F"
+        });
+    }
+      
   }
 
   DateOfBirthChangeHandler = event => {
@@ -125,12 +96,12 @@ class App extends Component {
     let alphabets = /[A-Za-z]/;
     if(alphabets.test(number)){
       this.setState({
-        phoneNumberError: " Phone number cannot contain alphabets"
+        phoneNumberError: " Enter valid phone number"
       });
     }
     else if(number > 9999999999){
       this.setState({
-        phoneNumberError: " Phone number cannot contain more than 10 digits"
+        phoneNumberError: " Enter valid phone number"
       });
     }
     else{
@@ -158,15 +129,36 @@ class App extends Component {
     }
   }
 
-  ShortBioChnagedHandler = (event) => {
+  ShortBioChangedHandler = (event) => {
     this.setState({
       shortBio: event.target.value
     });
   }
 
   FormSubmitHandler = (event) => {
+    
+    event.preventDefault();
 
+    const data={
+      firstName:  this.state.firstName,
+      lastName: this.state.lastName,
+      gender: this.state.gender,
+      dateOfBirth:  this.state.dateOfBirth,
+      phoneNumber:  this.state.phoneNumber,
+      email:  this.state.email,
+      shortBio: this.state.shortBio
+    }
+
+    Axios.post('http://localhost:3306/insert',data).then(response=>{
+      alert(response.data.status);
+    });
+
+    this.setState({
+        dateOfBirth: null
+      });
+    event.target.reset();
   }
+
   render() {  
 
     return (
@@ -222,18 +214,19 @@ class App extends Component {
                       className="gender"
                       onChange={event => {this.GenderChangedHandler(event)}}/>
                   </div>
-                <div className="col-lg-6">
-                  {/* <Input 
-                    inputType="input" 
-                    placeholder="Date of birth" 
-                    required
-                    errorMessage={this.state.dateOfBirthError}
-                    onChange={event => {this.DateOfBirthChangeHandler(event)}}/> */}
+                <div className="col-lg-6 spaceForError">
                     <DatePicker  
-                      className="date spaceForError" 
+                      className="date" 
                       placeholderText="Date Of Birth"
                       selected={this.state.dateOfBirth}
+                      showYearDropdown
+                      scrollableYearDropdown
+                      yearDropdownItemNumber={35}
+                      showMonthDropdown
+                      useShortMonthInDropdown
+                      
                       onChange={this.handleDateChange}/>
+                      {this.state.dateOfBirthError}
                 </div>
               </div>
               <div className="row">
@@ -262,7 +255,7 @@ class App extends Component {
                     inputType="textarea" 
                     placeholder="Short bio" 
                     required="required"
-                    onChange={event => {this.ShortBioChnagedHandler(event)}}
+                    onChange={event => {this.ShortBioChangedHandler(event)}}
                     errorMessage={this.state.shortBioError}/>
                 </div>
               </div>

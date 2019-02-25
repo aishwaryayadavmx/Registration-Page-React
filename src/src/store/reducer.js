@@ -1,5 +1,6 @@
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import React from 'react';
+import Axios from 'axios';
 
 const initialState = {
     firstName: "",
@@ -117,6 +118,32 @@ const reducer = (state = initialState, action) => {
             return{
                 ...initialState
             }
+        case 'formSubmit':
+            if(initialState.firstNameError || initialState.lastNameError || initialState.phoneNumberError || initialState.emailError)
+            {
+                action.event.preventDefault();
+                console.log("enter all the required data");
+            }
+            else{
+                const data={
+                    firstName:  initialState.firstName,
+                    lastName: initialState.lastName,
+                    gender: initialState.gender,
+                    dateOfBirth:  initialState.dateOfBirth,
+                    phoneNumber:  initialState.phoneNumber,
+                    email:  initialState.email,
+                    shortBio: initialState.shortBio
+                }
+            
+                Axios.post('http://localhost:3306/insert',data).then(response=>{
+                    alert(response.data.status);
+                });
+                
+                this.props.dateOfBirth = null;
+                this.props.phoneNumber = null;
+                action.event.target.reset();
+            }
+            break;
         default: return{
             ...initialState
         }

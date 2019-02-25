@@ -78,7 +78,7 @@ class App extends Component {
                       maxDate={new Date()}
                       showMonthDropdown
                       useShortMonthInDropdown
-                      withPortal
+                      
                       onChange={this.props.DateChangedHandler}/>
                 </div>
               </div>

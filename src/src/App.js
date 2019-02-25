@@ -74,7 +74,8 @@ class App extends Component {
                       selected={this.props.dateOfBirth}
                       showYearDropdown
                       scrollableYearDropdown
-                      yearDropdownItemNumber={35}
+                      yearDropdownItemNumber={30}
+                      maxDate={new Date()}
                       showMonthDropdown
                       useShortMonthInDropdown
                       withPortal
@@ -158,4 +159,5 @@ const mapDispatchToProps = dispatch => {
     FormSubmitHandler: (event) => dispatch({type: 'formSubmit', event: event})
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);

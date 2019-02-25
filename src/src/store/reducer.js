@@ -119,10 +119,13 @@ const reducer = (state = initialState, action) => {
                 ...initialState
             }
         case 'formSubmit':
-            if(initialState.firstNameError || initialState.lastNameError || initialState.phoneNumberError || initialState.emailError)
+            if(initialState.firstNameError!== "" || initialState.lastNameError!== "" || initialState.phoneNumberError!== "" || initialState.emailError!== "")
             {
                 action.event.preventDefault();
                 console.log("enter all the required data");
+                return {
+                    ...initialState
+                }
             }
             else{
                 const data={
@@ -139,11 +142,13 @@ const reducer = (state = initialState, action) => {
                     alert(response.data.status);
                 });
                 
-                this.props.dateOfBirth = null;
-                this.props.phoneNumber = null;
+                initialState.dateOfBirth = null;
+                initialState.phoneNumber = null;
                 action.event.target.reset();
+                return{
+                    ...initialState
+                }
             }
-            break;
         default: return{
             ...initialState
         }

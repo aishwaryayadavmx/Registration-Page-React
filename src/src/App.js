@@ -21,7 +21,7 @@ class App extends Component {
           <div>
             <div className="row">
               <div className="col-lg-12">
-                <h3 >Create an account</h3>
+                <h3>Create an account</h3>
               </div>
             </div>
             <form onSubmit={this.props.FormSubmitHandler}>
@@ -78,7 +78,7 @@ class App extends Component {
                       maxDate={new Date()}
                       showMonthDropdown
                       useShortMonthInDropdown
-                      
+                      title="Date of Birth (DD/MM/YYYY)"
                       onChange={this.props.DateChangedHandler}/>
                 </div>
               </div>
@@ -89,6 +89,7 @@ class App extends Component {
                      value={ this.props.phoneNumber }
                      required="required"
                      className="phone"
+                     title="Phone number"
                      onChange={this.props.PhoneNumberChangedHandler }
                      />
                     <p className="error">

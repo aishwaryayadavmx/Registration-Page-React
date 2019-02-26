@@ -18,6 +18,7 @@ const input = (props) => {
                                 <input className="InputElement" 
                                     placeholder={props.placeholder} 
                                     type={props.type} 
+                                    title={props.placeholder}
                                     required={props.required}
                                     onChange={props.onChange} 
                                 />
@@ -29,7 +30,8 @@ const input = (props) => {
             break;
         case('textarea'):
             inputElement = <div className="spaceForError">
-                                <textarea className="InputElement" 
+                                <textarea className="InputElement"
+                                    title = {props.placeholder} 
                                     placeholder={props.placeholder} 
                                     required={props.required}
                                     onChange={props.onChange}

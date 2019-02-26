@@ -8,7 +8,7 @@ const header = (props) =>{
                     <a className="navbar-brand" href="http://mscripts.com/" target="_blank" rel="noopener noreferrer">
                         <img src={props.url} className="Image" alt="Mscripts logo"/>
                     </a>
-                    <span className="navbar-text text">
+                    <span className="navbar-text text" title="Admin Console">
                         Admin&nbsp;Console
                     </span>
                 

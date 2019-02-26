@@ -15,7 +15,7 @@ const initialState = {
     email: "",
     emailError: "",
     shortBio: "",
-    icon: null
+    icon: ""
 }
 
 const reducer = (state = initialState, action) => {

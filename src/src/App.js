@@ -83,19 +83,21 @@ class App extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-6 ">
+                  <div className="spaceForError">
                     <PhoneInput
-                     placeholder="Phone number"
-                     value={ this.props.phoneNumber }
-                     required="required"
-                     className="phone"
-                     title="Phone number"
-                     onChange={this.props.PhoneNumberChangedHandler }
-                     />
-                    <p className="error">
-                        {this.props.icon}
-                        {this.props.phoneNumberError}
-                    </p>
+                      placeholder="Phone number"
+                      value={ this.props.phoneNumber }
+                      required="required"
+                      className="phone"
+                      title="Phone number"
+                      onChange={this.props.PhoneNumberChangedHandler }
+                      />
+                      <p className="error">
+                          {this.props.icon}
+                          {this.props.phoneNumberError}
+                      </p>
+                  </div>
                 </div>
                 <div className="col-lg-6">
                   <Input 
